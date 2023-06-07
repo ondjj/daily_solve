@@ -10,17 +10,17 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
 
         char[] temp = br.readLine().toCharArray();
-        char[] charr = new char[27];
-        for (int i = 1; i < charr.length; i++) {
-            charr[i] = (char) (96+i);
+        char[] small = new char[27];
+        for (int i = 1; i < small.length; i++) {
+            small[i] = (char) (96+i);
         }
 
         long hashing = 0L;
 
         for (int i = 0; i < temp.length; i++) {
-            for (int j = 1; j < charr.length; j++) {
-                if (temp[i] == charr[j]){
-                    hashing += j * (Math.pow(31L,i));
+            for (int j = 1; j < small.length; j++) {
+                if (temp[i] == small[j]){
+                    hashing += (j * (Math.pow(31L,i))) % 1234567891;
                 }
             }
         }
