@@ -1,44 +1,46 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
 
 public class Main {
+    private static int k;
+    private static int N;
+    private static int[] arr;
+    private static long result;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] str = br.readLine().split(" ");
-        int k = Integer.parseInt(str[0]);
-        int N = Integer.parseInt(str[1]);
-        int[] arr = new int[k];
-        
+        k = Integer.parseInt(str[0]);
+        N = Integer.parseInt(str[1]);
+        arr = new int[k];
         long max = 0;
-        
         for (int i = 0; i < k; i++) {
-            int lan = Integer.parseInt(br.readLine());
-            arr[i] = lan;
-            if (max < arr[i]){
-                max = arr[i];
-            }
+            arr[i] = Integer.parseInt(br.readLine());
+            if(max < arr[i]) max = arr[i];
         }
         max++;
-        
-        long min = 0;
-        long mid = 0;
+        result = 0;
+        dfs(1, max);
 
-        while (min < max) {
-            mid = (max + min) / 2;
-            long count = 0;
+        System.out.println(result);
+    }
 
-            for (int i = 0; i < arr.length; i++) {
-                count += (arr[i] / mid);
-            }
-
-            if (count < N) {
-                max = mid;
-            }else {
-                min = mid + 1;
-            }
+    private static void dfs(long left, long right) {
+        if (left > right) {
+            return;
         }
-        System.out.println(min - 1);
+        long mid = (left + right) / 2;
+        long count = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            count += (arr[i] / mid);
+        }
+        if (count >= N) {
+            result = Math.max(result, mid);
+            dfs(mid + 1, right);
+        } else {
+            dfs(left, mid - 1);
+        }
     }
 }
