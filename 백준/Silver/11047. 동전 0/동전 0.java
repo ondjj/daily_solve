@@ -1,10 +1,11 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
@@ -14,28 +15,31 @@ public class Main {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
-        int lt = 0, rt = n-1, result = Integer.MAX_VALUE;
-        while(lt <= rt){
-            int mid = (lt+rt)/2;
-            if (mid >= arr.length || arr[mid] > k) break;
+        int result = Integer.MAX_VALUE;
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (arr[mid] > k) {
+                right = mid - 1;
+                continue;
+            }
 
             int coin = 0;
-            int temp = k;
-
-            while(temp > 0){
-                if (arr[mid]<=temp){
-                    coin += temp/arr[mid];
-                    temp = (temp%arr[mid]);
-                }else {
+            int remainingAmount = k;
+            while (remainingAmount > 0) {
+                if (arr[mid] <= remainingAmount) {
+                    coin += remainingAmount / arr[mid];
+                    remainingAmount %= arr[mid];
+                } else {
                     mid--;
                 }
             }
+
             result = Math.min(result, coin);
-            lt++;
+            left++;
         }
 
         System.out.println(result);
-        bw.close();
         br.close();
     }
 }
