@@ -1,30 +1,23 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
-    static int n;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
-        int[] dy = new int[n + 1];
-        Arrays.fill(dy, Integer.MAX_VALUE);
-
-        List<Integer> squares = new ArrayList<>();
-        for (int i = 1; i * i <= n; i++) {
-            squares.add(i * i);
-        }
-        dy[0] = 0;
-        for (int i = 1; i <= n; i++) {
-            for (int square : squares) {
-                if (square > i) break;
-                dy[i] = Math.min(dy[i], dy[i - square] + 1);
+        int N = Integer.parseInt(br.readLine());
+        int[] dp = new int[N + 1];
+        dp[1] = 1;
+        int min = 0;
+        for (int i = 2; i <= N; i++) {
+            min = Integer.MAX_VALUE;
+            for (int j=1; j*j<=i; j++){
+                int temp = i - j * j;
+                min = Math.min(min,dp[temp]);
             }
+            dp[i] = min+1;
         }
-        System.out.println(dy[n]);
+        System.out.println(dp[N]);
         br.close();
     }
 }
