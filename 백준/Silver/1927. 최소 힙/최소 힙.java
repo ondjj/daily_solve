@@ -11,15 +11,12 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             int temp = Integer.parseInt(br.readLine());
-
-            if (temp == 0) {
-                if (priQueue.isEmpty()) {
-                    System.out.println(0);
-                } else {
-                    System.out.println(priQueue.poll());
-                }
-            } else {
+            if (temp != 0) {
                 priQueue.add(temp);
+            } else if (priQueue.isEmpty()) {
+                System.out.println(0);
+            }else {
+                System.out.println(priQueue.poll());
             }
         }
     }
